@@ -1,0 +1,744 @@
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'fir_tb'
+WARNING: [Vivado 12-13340] Unable to auto find GCC executables from simulator install path! (path not set)
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/b0990/vivado/SOC_Lab3_Final/SOC_Lab3_Final.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from 'C:/Xilinx/Vivado/2024.1/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'fir_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/b0990/vivado/SOC_Lab3_Final/SOC_Lab3_Final.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj fir_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/b0990/vivado/SOC_Lab3_Final/SOC_Lab3_Final.srcs/sources_1/new/axi_lite.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi_lite
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/b0990/vivado/SOC_Lab3_Final/SOC_Lab3_Final.srcs/sources_1/new/axi_stream.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi_stream
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/b0990/vivado/SOC_Lab3_Final/SOC_Lab3_Final.srcs/sources_1/new/bram11.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bram11
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/b0990/vivado/SOC_Lab3_Final/SOC_Lab3_Final.srcs/sources_1/new/fir.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fir
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/b0990/vivado/SOC_Lab3_Final/SOC_Lab3_Final.srcs/sim_1/new/fir_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fir_tb
+INFO: [USF-XSim-69] 'compile' step finished in '4' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/b0990/vivado/SOC_Lab3_Final/SOC_Lab3_Final.sim/sim_1/behav/xsim'
+"xelab --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot fir_tb_behav xil_defaultlib.fir_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator v2024.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2024.1/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot fir_tb_behav xil_defaultlib.fir_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.axi_lite_default
+Compiling module xil_defaultlib.axi_stream_default
+Compiling module xil_defaultlib.fir_default
+Compiling module xil_defaultlib.bram11
+Compiling module xil_defaultlib.fir_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot fir_tb_behav
+run_program: Time (s): cpu = 00:00:00 ; elapsed = 00:00:06 . Memory (MB): peak = 3068.582 ; gain = 0.000
+INFO: [USF-XSim-69] 'elaborate' step finished in '6' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'C:/Users/b0990/vivado/SOC_Lab3_Final/SOC_Lab3_Final.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "fir_tb_behav -key {Behavioral:sim_1:Functional:fir_tb} -tclbatch {fir_tb.tcl} -view {C:/Users/b0990/vivado/SOC_Lab3_Final/fir_tb_behav1.wcfg} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+open_wave_config C:/Users/b0990/vivado/SOC_Lab3_Final/fir_tb_behav1.wcfg
+source fir_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# log_wave -r /
+# run 2ms
+----Start the coefficient input(AXI-lite)----
+ Check Coefficient ...
+OK: exp =        -133, rdata =        -133
+OK: exp =        -161, rdata =        -161
+OK: exp =         617, rdata =         617
+OK: exp =         966, rdata =         966
+OK: exp =        -699, rdata =        -699
+OK: exp =        -801, rdata =        -801
+OK: exp =         331, rdata =         331
+OK: exp =          96, rdata =          96
+OK: exp =        -834, rdata =        -834
+OK: exp =          59, rdata =          59
+OK: exp =         810, rdata =         810
+ Tape programming done ...
+ Start FIR
+----End the coefficient input(AXI-lite)----
+----Start the data input(AXI-Stream)----
+OK: exp =         248, rdata =         248
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+[PASS] [Pattern          0] Golden answer:       26467, Your answer:       26467
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+[PASS] [Pattern          1] Golden answer:       63826, Your answer:       63826
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+[PASS] [Pattern          2] Golden answer:      -43207, Your answer:      -43207
+[PASS] [Pattern          3] Golden answer:     -417229, Your answer:     -417229
+[PASS] [Pattern          4] Golden answer:     -563784, Your answer:     -563784
+[PASS] [Pattern          5] Golden answer:      593501, Your answer:      593501
+[PASS] [Pattern          6] Golden answer:     2041285, Your answer:     2041285
+[PASS] [Pattern          7] Golden answer:     -207851, Your answer:     -207851
+[PASS] [Pattern          8] Golden answer:    -2526759, Your answer:    -2526759
+[PASS] [Pattern          9] Golden answer:      355910, Your answer:      355910
+[PASS] [Pattern         10] Golden answer:     1654431, Your answer:     1654431
+[PASS] [Pattern         11] Golden answer:    -1275967, Your answer:    -1275967
+[PASS] [Pattern         12] Golden answer:     -972575, Your answer:     -972575
+[PASS] [Pattern         13] Golden answer:     2322709, Your answer:     2322709
+[PASS] [Pattern         14] Golden answer:     1256490, Your answer:     1256490
+[PASS] [Pattern         15] Golden answer:    -1067794, Your answer:    -1067794
+[PASS] [Pattern         16] Golden answer:     -789744, Your answer:     -789744
+[PASS] [Pattern         17] Golden answer:     -905997, Your answer:     -905997
+[PASS] [Pattern         18] Golden answer:     -505573, Your answer:     -505573
+[PASS] [Pattern         19] Golden answer:      686327, Your answer:      686327
+[PASS] [Pattern         20] Golden answer:      957320, Your answer:      957320
+[PASS] [Pattern         21] Golden answer:     -482915, Your answer:     -482915
+[PASS] [Pattern         22] Golden answer:      -86570, Your answer:      -86570
+[PASS] [Pattern         23] Golden answer:     1426162, Your answer:     1426162
+[PASS] [Pattern         24] Golden answer:      607326, Your answer:      607326
+[PASS] [Pattern         25] Golden answer:    -2303758, Your answer:    -2303758
+[PASS] [Pattern         26] Golden answer:     -645250, Your answer:     -645250
+[PASS] [Pattern         27] Golden answer:     2378311, Your answer:     2378311
+[PASS] [Pattern         28] Golden answer:      508072, Your answer:      508072
+[PASS] [Pattern         29] Golden answer:    -2583701, Your answer:    -2583701
+[PASS] [Pattern         30] Golden answer:     -499438, Your answer:     -499438
+[PASS] [Pattern         31] Golden answer:     1306661, Your answer:     1306661
+[PASS] [Pattern         32] Golden answer:     -286047, Your answer:     -286047
+[PASS] [Pattern         33] Golden answer:     -296478, Your answer:     -296478
+[PASS] [Pattern         34] Golden answer:      774087, Your answer:      774087
+[PASS] [Pattern         35] Golden answer:     1828779, Your answer:     1828779
+[PASS] [Pattern         36] Golden answer:      217849, Your answer:      217849
+[PASS] [Pattern         37] Golden answer:     -959579, Your answer:     -959579
+[PASS] [Pattern         38] Golden answer:    -1312463, Your answer:    -1312463
+[PASS] [Pattern         39] Golden answer:     -307224, Your answer:     -307224
+[PASS] [Pattern         40] Golden answer:     -165831, Your answer:     -165831
+[PASS] [Pattern         41] Golden answer:     -364734, Your answer:     -364734
+[PASS] [Pattern         42] Golden answer:      819782, Your answer:      819782
+[PASS] [Pattern         43] Golden answer:     -206357, Your answer:     -206357
+[PASS] [Pattern         44] Golden answer:     -248281, Your answer:     -248281
+[PASS] [Pattern         45] Golden answer:      383364, Your answer:      383364
+[PASS] [Pattern         46] Golden answer:      410890, Your answer:      410890
+[PASS] [Pattern         47] Golden answer:     -714249, Your answer:     -714249
+[PASS] [Pattern         48] Golden answer:      835515, Your answer:      835515
+[PASS] [Pattern         49] Golden answer:     1133984, Your answer:     1133984
+[PASS] [Pattern         50] Golden answer:    -1634916, Your answer:    -1634916
+[PASS] [Pattern         51] Golden answer:    -1057352, Your answer:    -1057352
+[PASS] [Pattern         52] Golden answer:     1433106, Your answer:     1433106
+[PASS] [Pattern         53] Golden answer:     1127634, Your answer:     1127634
+[PASS] [Pattern         54] Golden answer:    -1492152, Your answer:    -1492152
+[PASS] [Pattern         55] Golden answer:     -687631, Your answer:     -687631
+[PASS] [Pattern         56] Golden answer:      975295, Your answer:      975295
+[PASS] [Pattern         57] Golden answer:     -460444, Your answer:     -460444
+[PASS] [Pattern         58] Golden answer:     -230933, Your answer:     -230933
+[PASS] [Pattern         59] Golden answer:      889182, Your answer:      889182
+[PASS] [Pattern         60] Golden answer:      742041, Your answer:      742041
+[PASS] [Pattern         61] Golden answer:     -975766, Your answer:     -975766
+[PASS] [Pattern         62] Golden answer:     -956526, Your answer:     -956526
+[PASS] [Pattern         63] Golden answer:      492746, Your answer:      492746
+[PASS] [Pattern         64] Golden answer:    -1767918, Your answer:    -1767918
+[PASS] [Pattern         65] Golden answer:     -358614, Your answer:     -358614
+[PASS] [Pattern         66] Golden answer:     3176626, Your answer:     3176626
+[PASS] [Pattern         67] Golden answer:     1748180, Your answer:     1748180
+[PASS] [Pattern         68] Golden answer:    -1827942, Your answer:    -1827942
+[PASS] [Pattern         69] Golden answer:      -79793, Your answer:      -79793
+[PASS] [Pattern         70] Golden answer:     1021762, Your answer:     1021762
+[PASS] [Pattern         71] Golden answer:    -1171920, Your answer:    -1171920
+[PASS] [Pattern         72] Golden answer:    -1170595, Your answer:    -1170595
+[PASS] [Pattern         73] Golden answer:      730476, Your answer:      730476
+[PASS] [Pattern         74] Golden answer:      679740, Your answer:      679740
+[PASS] [Pattern         75] Golden answer:      502740, Your answer:      502740
+[PASS] [Pattern         76] Golden answer:       54591, Your answer:       54591
+[PASS] [Pattern         77] Golden answer:      146910, Your answer:      146910
+[PASS] [Pattern         78] Golden answer:      260799, Your answer:      260799
+[PASS] [Pattern         79] Golden answer:    -1379011, Your answer:    -1379011
+[PASS] [Pattern         80] Golden answer:    -1275346, Your answer:    -1275346
+[PASS] [Pattern         81] Golden answer:     -432197, Your answer:     -432197
+[PASS] [Pattern         82] Golden answer:      688323, Your answer:      688323
+[PASS] [Pattern         83] Golden answer:     1196295, Your answer:     1196295
+[PASS] [Pattern         84] Golden answer:       10376, Your answer:       10376
+[PASS] [Pattern         85] Golden answer:       55356, Your answer:       55356
+[PASS] [Pattern         86] Golden answer:      798438, Your answer:      798438
+[PASS] [Pattern         87] Golden answer:     -178528, Your answer:     -178528
+[PASS] [Pattern         88] Golden answer:     -724533, Your answer:     -724533
+[PASS] [Pattern         89] Golden answer:      698096, Your answer:      698096
+[PASS] [Pattern         90] Golden answer:      184410, Your answer:      184410
+[PASS] [Pattern         91] Golden answer:     -957548, Your answer:     -957548
+[PASS] [Pattern         92] Golden answer:     1011828, Your answer:     1011828
+[PASS] [Pattern         93] Golden answer:      955751, Your answer:      955751
+[PASS] [Pattern         94] Golden answer:    -1347914, Your answer:    -1347914
+[PASS] [Pattern         95] Golden answer:     -882301, Your answer:     -882301
+[PASS] [Pattern         96] Golden answer:     1196330, Your answer:     1196330
+[PASS] [Pattern         97] Golden answer:      802352, Your answer:      802352
+[PASS] [Pattern         98] Golden answer:    -1740659, Your answer:    -1740659
+[PASS] [Pattern         99] Golden answer:    -1367846, Your answer:    -1367846
+[PASS] [Pattern        100] Golden answer:     1972109, Your answer:     1972109
+[PASS] [Pattern        101] Golden answer:      487206, Your answer:      487206
+[PASS] [Pattern        102] Golden answer:     -649873, Your answer:     -649873
+[PASS] [Pattern        103] Golden answer:      -27816, Your answer:      -27816
+[PASS] [Pattern        104] Golden answer:      459065, Your answer:      459065
+[PASS] [Pattern        105] Golden answer:      912392, Your answer:      912392
+[PASS] [Pattern        106] Golden answer:     -729353, Your answer:     -729353
+[PASS] [Pattern        107] Golden answer:    -1752493, Your answer:    -1752493
+[PASS] [Pattern        108] Golden answer:     -299477, Your answer:     -299477
+[PASS] [Pattern        109] Golden answer:     1917672, Your answer:     1917672
+[PASS] [Pattern        110] Golden answer:      425699, Your answer:      425699
+[PASS] [Pattern        111] Golden answer:     -722339, Your answer:     -722339
+[PASS] [Pattern        112] Golden answer:     1452503, Your answer:     1452503
+[PASS] [Pattern        113] Golden answer:     -377488, Your answer:     -377488
+[PASS] [Pattern        114] Golden answer:    -1471634, Your answer:    -1471634
+[PASS] [Pattern        115] Golden answer:     -751025, Your answer:     -751025
+[PASS] [Pattern        116] Golden answer:      471411, Your answer:      471411
+[PASS] [Pattern        117] Golden answer:     1617243, Your answer:     1617243
+[PASS] [Pattern        118] Golden answer:      -80094, Your answer:      -80094
+[PASS] [Pattern        119] Golden answer:     -999378, Your answer:     -999378
+[PASS] [Pattern        120] Golden answer:      203709, Your answer:      203709
+[PASS] [Pattern        121] Golden answer:     1787247, Your answer:     1787247
+[PASS] [Pattern        122] Golden answer:     -512992, Your answer:     -512992
+[PASS] [Pattern        123] Golden answer:    -2394453, Your answer:    -2394453
+[PASS] [Pattern        124] Golden answer:     -168074, Your answer:     -168074
+[PASS] [Pattern        125] Golden answer:      560002, Your answer:      560002
+[PASS] [Pattern        126] Golden answer:     -536150, Your answer:     -536150
+[PASS] [Pattern        127] Golden answer:     -408151, Your answer:     -408151
+[PASS] [Pattern        128] Golden answer:     2218786, Your answer:     2218786
+[PASS] [Pattern        129] Golden answer:     1497833, Your answer:     1497833
+[PASS] [Pattern        130] Golden answer:    -1713185, Your answer:    -1713185
+[PASS] [Pattern        131] Golden answer:        7621, Your answer:        7621
+[PASS] [Pattern        132] Golden answer:     1334043, Your answer:     1334043
+[PASS] [Pattern        133] Golden answer:    -1346985, Your answer:    -1346985
+[PASS] [Pattern        134] Golden answer:    -1811320, Your answer:    -1811320
+[PASS] [Pattern        135] Golden answer:      779285, Your answer:      779285
+[PASS] [Pattern        136] Golden answer:     -271327, Your answer:     -271327
+[PASS] [Pattern        137] Golden answer:     -939022, Your answer:     -939022
+[PASS] [Pattern        138] Golden answer:     1709426, Your answer:     1709426
+[PASS] [Pattern        139] Golden answer:      595461, Your answer:      595461
+[PASS] [Pattern        140] Golden answer:    -1080221, Your answer:    -1080221
+[PASS] [Pattern        141] Golden answer:       74048, Your answer:       74048
+[PASS] [Pattern        142] Golden answer:     1288381, Your answer:     1288381
+[PASS] [Pattern        143] Golden answer:     -831235, Your answer:     -831235
+[PASS] [Pattern        144] Golden answer:     -745889, Your answer:     -745889
+[PASS] [Pattern        145] Golden answer:      351588, Your answer:      351588
+[PASS] [Pattern        146] Golden answer:     1163862, Your answer:     1163862
+[PASS] [Pattern        147] Golden answer:      351989, Your answer:      351989
+[PASS] [Pattern        148] Golden answer:    -1319666, Your answer:    -1319666
+[PASS] [Pattern        149] Golden answer:     -549234, Your answer:     -549234
+[PASS] [Pattern        150] Golden answer:      460530, Your answer:      460530
+[PASS] [Pattern        151] Golden answer:      429264, Your answer:      429264
+[PASS] [Pattern        152] Golden answer:     -475174, Your answer:     -475174
+[PASS] [Pattern        153] Golden answer:     -614330, Your answer:     -614330
+[PASS] [Pattern        154] Golden answer:     -565466, Your answer:     -565466
+[PASS] [Pattern        155] Golden answer:     1201992, Your answer:     1201992
+[PASS] [Pattern        156] Golden answer:     1967843, Your answer:     1967843
+[PASS] [Pattern        157] Golden answer:     -976970, Your answer:     -976970
+[PASS] [Pattern        158] Golden answer:    -1775792, Your answer:    -1775792
+[PASS] [Pattern        159] Golden answer:     1740146, Your answer:     1740146
+[PASS] [Pattern        160] Golden answer:      687740, Your answer:      687740
+[PASS] [Pattern        161] Golden answer:    -1639263, Your answer:    -1639263
+[PASS] [Pattern        162] Golden answer:    -1081739, Your answer:    -1081739
+[PASS] [Pattern        163] Golden answer:     1846439, Your answer:     1846439
+[PASS] [Pattern        164] Golden answer:      721131, Your answer:      721131
+[PASS] [Pattern        165] Golden answer:    -1959651, Your answer:    -1959651
+[PASS] [Pattern        166] Golden answer:     -387032, Your answer:     -387032
+[PASS] [Pattern        167] Golden answer:      568030, Your answer:      568030
+[PASS] [Pattern        168] Golden answer:      -22954, Your answer:      -22954
+[PASS] [Pattern        169] Golden answer:      299303, Your answer:      299303
+[PASS] [Pattern        170] Golden answer:     1236937, Your answer:     1236937
+[PASS] [Pattern        171] Golden answer:      575384, Your answer:      575384
+[PASS] [Pattern        172] Golden answer:     -344766, Your answer:     -344766
+[PASS] [Pattern        173] Golden answer:     -416819, Your answer:     -416819
+[PASS] [Pattern        174] Golden answer:    -1769300, Your answer:    -1769300
+[PASS] [Pattern        175] Golden answer:      365119, Your answer:      365119
+[PASS] [Pattern        176] Golden answer:     1206709, Your answer:     1206709
+[PASS] [Pattern        177] Golden answer:    -1614385, Your answer:    -1614385
+[PASS] [Pattern        178] Golden answer:     -809481, Your answer:     -809481
+[PASS] [Pattern        179] Golden answer:     1988742, Your answer:     1988742
+[PASS] [Pattern        180] Golden answer:     1374078, Your answer:     1374078
+[PASS] [Pattern        181] Golden answer:    -1048490, Your answer:    -1048490
+[PASS] [Pattern        182] Golden answer:      246626, Your answer:      246626
+[PASS] [Pattern        183] Golden answer:     -451241, Your answer:     -451241
+[PASS] [Pattern        184] Golden answer:    -1591377, Your answer:    -1591377
+[PASS] [Pattern        185] Golden answer:      493052, Your answer:      493052
+[PASS] [Pattern        186] Golden answer:     1227842, Your answer:     1227842
+[PASS] [Pattern        187] Golden answer:      471961, Your answer:      471961
+[PASS] [Pattern        188] Golden answer:     -115817, Your answer:     -115817
+[PASS] [Pattern        189] Golden answer:     -741803, Your answer:     -741803
+[PASS] [Pattern        190] Golden answer:      -75003, Your answer:      -75003
+[PASS] [Pattern        191] Golden answer:      743296, Your answer:      743296
+[PASS] [Pattern        192] Golden answer:        3192, Your answer:        3192
+[PASS] [Pattern        193] Golden answer:      -45223, Your answer:      -45223
+[PASS] [Pattern        194] Golden answer:      492647, Your answer:      492647
+[PASS] [Pattern        195] Golden answer:     -926198, Your answer:     -926198
+[PASS] [Pattern        196] Golden answer:     -712696, Your answer:     -712696
+[PASS] [Pattern        197] Golden answer:       -6008, Your answer:       -6008
+[PASS] [Pattern        198] Golden answer:    -1145766, Your answer:    -1145766
+[PASS] [Pattern        199] Golden answer:      -39140, Your answer:      -39140
+[PASS] [Pattern        200] Golden answer:     2025647, Your answer:     2025647
+[PASS] [Pattern        201] Golden answer:      922178, Your answer:      922178
+[PASS] [Pattern        202] Golden answer:     -440408, Your answer:     -440408
+[PASS] [Pattern        203] Golden answer:      151066, Your answer:      151066
+[PASS] [Pattern        204] Golden answer:      284824, Your answer:      284824
+[PASS] [Pattern        205] Golden answer:    -1227271, Your answer:    -1227271
+[PASS] [Pattern        206] Golden answer:       43355, Your answer:       43355
+[PASS] [Pattern        207] Golden answer:      675784, Your answer:      675784
+[PASS] [Pattern        208] Golden answer:    -1315557, Your answer:    -1315557
+[PASS] [Pattern        209] Golden answer:      118673, Your answer:      118673
+[PASS] [Pattern        210] Golden answer:     2326538, Your answer:     2326538
+[PASS] [Pattern        211] Golden answer:     -650653, Your answer:     -650653
+[PASS] [Pattern        212] Golden answer:    -2841565, Your answer:    -2841565
+[PASS] [Pattern        213] Golden answer:     1460538, Your answer:     1460538
+[PASS] [Pattern        214] Golden answer:     1497662, Your answer:     1497662
+[PASS] [Pattern        215] Golden answer:    -1828186, Your answer:    -1828186
+[PASS] [Pattern        216] Golden answer:      564030, Your answer:      564030
+[PASS] [Pattern        217] Golden answer:     1814937, Your answer:     1814937
+[PASS] [Pattern        218] Golden answer:     -389077, Your answer:     -389077
+[PASS] [Pattern        219] Golden answer:    -2040303, Your answer:    -2040303
+[PASS] [Pattern        220] Golden answer:     -330342, Your answer:     -330342
+[PASS] [Pattern        221] Golden answer:      970404, Your answer:      970404
+[PASS] [Pattern        222] Golden answer:     -241727, Your answer:     -241727
+[PASS] [Pattern        223] Golden answer:    -1159083, Your answer:    -1159083
+[PASS] [Pattern        224] Golden answer:      973472, Your answer:      973472
+[PASS] [Pattern        225] Golden answer:      992542, Your answer:      992542
+[PASS] [Pattern        226] Golden answer:    -1263013, Your answer:    -1263013
+[PASS] [Pattern        227] Golden answer:      563031, Your answer:      563031
+[PASS] [Pattern        228] Golden answer:     1461040, Your answer:     1461040
+[PASS] [Pattern        229] Golden answer:     -201428, Your answer:     -201428
+[PASS] [Pattern        230] Golden answer:     -554246, Your answer:     -554246
+[PASS] [Pattern        231] Golden answer:     -279210, Your answer:     -279210
+[PASS] [Pattern        232] Golden answer:     -713703, Your answer:     -713703
+[PASS] [Pattern        233] Golden answer:      140435, Your answer:      140435
+[PASS] [Pattern        234] Golden answer:     1240740, Your answer:     1240740
+[PASS] [Pattern        235] Golden answer:      -20796, Your answer:      -20796
+[PASS] [Pattern        236] Golden answer:     -575629, Your answer:     -575629
+[PASS] [Pattern        237] Golden answer:     -229037, Your answer:     -229037
+[PASS] [Pattern        238] Golden answer:     -456667, Your answer:     -456667
+[PASS] [Pattern        239] Golden answer:     -863831, Your answer:     -863831
+[PASS] [Pattern        240] Golden answer:      -62772, Your answer:      -62772
+[PASS] [Pattern        241] Golden answer:     1267957, Your answer:     1267957
+[PASS] [Pattern        242] Golden answer:     1156651, Your answer:     1156651
+[PASS] [Pattern        243] Golden answer:     -692124, Your answer:     -692124
+[PASS] [Pattern        244] Golden answer:     -250293, Your answer:     -250293
+[PASS] [Pattern        245] Golden answer:      216205, Your answer:      216205
+[PASS] [Pattern        246] Golden answer:      945171, Your answer:      945171
+------End the data input(AXI-Stream)------
+[PASS] [Pattern        247] Golden answer:     -457702, Your answer:     -457702
+latency =        3513
+----Start the coefficient input(AXI-lite)----
+ Check Coefficient ...
+OK: exp =         215, rdata =         215
+OK: exp =        -773, rdata =        -773
+OK: exp =        -489, rdata =        -489
+OK: exp =         818, rdata =         818
+OK: exp =         945, rdata =         945
+OK: exp =         595, rdata =         595
+OK: exp =         731, rdata =         731
+OK: exp =         461, rdata =         461
+OK: exp =         833, rdata =         833
+OK: exp =        -489, rdata =        -489
+OK: exp =        -511, rdata =        -511
+ Tape programming done ...
+ Start FIR
+----End the coefficient input(AXI-lite)----
+----Start the data input(AXI-Stream)----
+OK: exp =         236, rdata =         236
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+[PASS] [Pattern          0] Golden answer:      148565, Your answer:      148565
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+[PASS] [Pattern          1] Golden answer:     -703133, Your answer:     -703133
+[PASS] [Pattern          2] Golden answer:       67364, Your answer:       67364
+[PASS] [Pattern          3] Golden answer:     1603455, Your answer:     1603455
+[PASS] [Pattern          4] Golden answer:      580622, Your answer:      580622
+[PASS] [Pattern          5] Golden answer:     -297452, Your answer:     -297452
+[PASS] [Pattern          6] Golden answer:    -1111537, Your answer:    -1111537
+[PASS] [Pattern          7] Golden answer:    -1607929, Your answer:    -1607929
+[PASS] [Pattern          8] Golden answer:    -1791920, Your answer:    -1791920
+[PASS] [Pattern          9] Golden answer:    -2022388, Your answer:    -2022388
+[PASS] [Pattern         10] Golden answer:      113497, Your answer:      113497
+[PASS] [Pattern         11] Golden answer:     1804065, Your answer:     1804065
+[PASS] [Pattern         12] Golden answer:      295743, Your answer:      295743
+[PASS] [Pattern         13] Golden answer:     -647023, Your answer:     -647023
+[PASS] [Pattern         14] Golden answer:    -2533123, Your answer:    -2533123
+[PASS] [Pattern         15] Golden answer:     -812522, Your answer:     -812522
+[PASS] [Pattern         16] Golden answer:    -1219434, Your answer:    -1219434
+[PASS] [Pattern         17] Golden answer:     -543658, Your answer:     -543658
+[PASS] [Pattern         18] Golden answer:     2015523, Your answer:     2015523
+[PASS] [Pattern         19] Golden answer:     3340661, Your answer:     3340661
+[PASS] [Pattern         20] Golden answer:     2191214, Your answer:     2191214
+[PASS] [Pattern         21] Golden answer:     1275236, Your answer:     1275236
+[PASS] [Pattern         22] Golden answer:     -171067, Your answer:     -171067
+[PASS] [Pattern         23] Golden answer:      228214, Your answer:      228214
+[PASS] [Pattern         24] Golden answer:      644782, Your answer:      644782
+[PASS] [Pattern         25] Golden answer:      729555, Your answer:      729555
+[PASS] [Pattern         26] Golden answer:     -449349, Your answer:     -449349
+[PASS] [Pattern         27] Golden answer:       72434, Your answer:       72434
+[PASS] [Pattern         28] Golden answer:     -280968, Your answer:     -280968
+[PASS] [Pattern         29] Golden answer:      236363, Your answer:      236363
+[PASS] [Pattern         30] Golden answer:    -1534982, Your answer:    -1534982
+[PASS] [Pattern         31] Golden answer:       -7116, Your answer:       -7116
+[PASS] [Pattern         32] Golden answer:      984867, Your answer:      984867
+[PASS] [Pattern         33] Golden answer:     1424592, Your answer:     1424592
+[PASS] [Pattern         34] Golden answer:     1656802, Your answer:     1656802
+[PASS] [Pattern         35] Golden answer:     1785253, Your answer:     1785253
+[PASS] [Pattern         36] Golden answer:     1265613, Your answer:     1265613
+[PASS] [Pattern         37] Golden answer:     -132337, Your answer:     -132337
+[PASS] [Pattern         38] Golden answer:    -2955721, Your answer:    -2955721
+[PASS] [Pattern         39] Golden answer:    -1733843, Your answer:    -1733843
+[PASS] [Pattern         40] Golden answer:     -775576, Your answer:     -775576
+[PASS] [Pattern         41] Golden answer:    -1509389, Your answer:    -1509389
+[PASS] [Pattern         42] Golden answer:     -885548, Your answer:     -885548
+[PASS] [Pattern         43] Golden answer:     1263811, Your answer:     1263811
+[PASS] [Pattern         44] Golden answer:     1873940, Your answer:     1873940
+[PASS] [Pattern         45] Golden answer:      507944, Your answer:      507944
+[PASS] [Pattern         46] Golden answer:      962907, Your answer:      962907
+[PASS] [Pattern         47] Golden answer:      151107, Your answer:      151107
+[PASS] [Pattern         48] Golden answer:      343047, Your answer:      343047
+[PASS] [Pattern         49] Golden answer:      297964, Your answer:      297964
+[PASS] [Pattern         50] Golden answer:    -2445505, Your answer:    -2445505
+[PASS] [Pattern         51] Golden answer:    -1732956, Your answer:    -1732956
+[PASS] [Pattern         52] Golden answer:    -1908451, Your answer:    -1908451
+[PASS] [Pattern         53] Golden answer:    -1427670, Your answer:    -1427670
+[PASS] [Pattern         54] Golden answer:      449225, Your answer:      449225
+[PASS] [Pattern         55] Golden answer:      654262, Your answer:      654262
+[PASS] [Pattern         56] Golden answer:     1172484, Your answer:     1172484
+[PASS] [Pattern         57] Golden answer:     1018130, Your answer:     1018130
+[PASS] [Pattern         58] Golden answer:     -336668, Your answer:     -336668
+[PASS] [Pattern         59] Golden answer:       -1076, Your answer:       -1076
+[PASS] [Pattern         60] Golden answer:     1375444, Your answer:     1375444
+[PASS] [Pattern         61] Golden answer:      676637, Your answer:      676637
+[PASS] [Pattern         62] Golden answer:      -97028, Your answer:      -97028
+[PASS] [Pattern         63] Golden answer:     -856107, Your answer:     -856107
+[PASS] [Pattern         64] Golden answer:      876484, Your answer:      876484
+[PASS] [Pattern         65] Golden answer:     1794087, Your answer:     1794087
+[PASS] [Pattern         66] Golden answer:      455884, Your answer:      455884
+[PASS] [Pattern         67] Golden answer:      379675, Your answer:      379675
+[PASS] [Pattern         68] Golden answer:     1115357, Your answer:     1115357
+[PASS] [Pattern         69] Golden answer:     1812531, Your answer:     1812531
+[PASS] [Pattern         70] Golden answer:      938882, Your answer:      938882
+[PASS] [Pattern         71] Golden answer:     -909442, Your answer:     -909442
+[PASS] [Pattern         72] Golden answer:      472937, Your answer:      472937
+[PASS] [Pattern         73] Golden answer:     3924728, Your answer:     3924728
+[PASS] [Pattern         74] Golden answer:     1119613, Your answer:     1119613
+[PASS] [Pattern         75] Golden answer:       99895, Your answer:       99895
+[PASS] [Pattern         76] Golden answer:     -889630, Your answer:     -889630
+[PASS] [Pattern         77] Golden answer:      256037, Your answer:      256037
+[PASS] [Pattern         78] Golden answer:     1540932, Your answer:     1540932
+[PASS] [Pattern         79] Golden answer:    -2204990, Your answer:    -2204990
+[PASS] [Pattern         80] Golden answer:    -2035391, Your answer:    -2035391
+[PASS] [Pattern         81] Golden answer:     1656427, Your answer:     1656427
+[PASS] [Pattern         82] Golden answer:      723100, Your answer:      723100
+[PASS] [Pattern         83] Golden answer:    -1565843, Your answer:    -1565843
+[PASS] [Pattern         84] Golden answer:    -2205688, Your answer:    -2205688
+[PASS] [Pattern         85] Golden answer:    -1020097, Your answer:    -1020097
+[PASS] [Pattern         86] Golden answer:     -342284, Your answer:     -342284
+[PASS] [Pattern         87] Golden answer:    -2384006, Your answer:    -2384006
+[PASS] [Pattern         88] Golden answer:    -2786214, Your answer:    -2786214
+[PASS] [Pattern         89] Golden answer:     -513177, Your answer:     -513177
+[PASS] [Pattern         90] Golden answer:      160598, Your answer:      160598
+[PASS] [Pattern         91] Golden answer:    -1073758, Your answer:    -1073758
+[PASS] [Pattern         92] Golden answer:     -149543, Your answer:     -149543
+[PASS] [Pattern         93] Golden answer:     1743703, Your answer:     1743703
+[PASS] [Pattern         94] Golden answer:      -93907, Your answer:      -93907
+[PASS] [Pattern         95] Golden answer:     -707361, Your answer:     -707361
+[PASS] [Pattern         96] Golden answer:    -2040982, Your answer:    -2040982
+[PASS] [Pattern         97] Golden answer:    -1064333, Your answer:    -1064333
+[PASS] [Pattern         98] Golden answer:    -2232783, Your answer:    -2232783
+[PASS] [Pattern         99] Golden answer:    -1743246, Your answer:    -1743246
+[PASS] [Pattern        100] Golden answer:     -381920, Your answer:     -381920
+[PASS] [Pattern        101] Golden answer:     1376331, Your answer:     1376331
+[PASS] [Pattern        102] Golden answer:     2165919, Your answer:     2165919
+[PASS] [Pattern        103] Golden answer:     1220507, Your answer:     1220507
+[PASS] [Pattern        104] Golden answer:      182605, Your answer:      182605
+[PASS] [Pattern        105] Golden answer:    -1572824, Your answer:    -1572824
+[PASS] [Pattern        106] Golden answer:    -1616312, Your answer:    -1616312
+[PASS] [Pattern        107] Golden answer:      314831, Your answer:      314831
+[PASS] [Pattern        108] Golden answer:    -1264147, Your answer:    -1264147
+[PASS] [Pattern        109] Golden answer:    -1002743, Your answer:    -1002743
+[PASS] [Pattern        110] Golden answer:     1310411, Your answer:     1310411
+[PASS] [Pattern        111] Golden answer:     2394823, Your answer:     2394823
+[PASS] [Pattern        112] Golden answer:     -191785, Your answer:     -191785
+[PASS] [Pattern        113] Golden answer:    -1031674, Your answer:    -1031674
+[PASS] [Pattern        114] Golden answer:     -988363, Your answer:     -988363
+[PASS] [Pattern        115] Golden answer:     1342962, Your answer:     1342962
+[PASS] [Pattern        116] Golden answer:      212593, Your answer:      212593
+[PASS] [Pattern        117] Golden answer:      -83513, Your answer:      -83513
+[PASS] [Pattern        118] Golden answer:     1595364, Your answer:     1595364
+[PASS] [Pattern        119] Golden answer:     1312468, Your answer:     1312468
+[PASS] [Pattern        120] Golden answer:     1577055, Your answer:     1577055
+[PASS] [Pattern        121] Golden answer:     1499358, Your answer:     1499358
+[PASS] [Pattern        122] Golden answer:    -2142296, Your answer:    -2142296
+[PASS] [Pattern        123] Golden answer:    -1579368, Your answer:    -1579368
+[PASS] [Pattern        124] Golden answer:    -1686719, Your answer:    -1686719
+[PASS] [Pattern        125] Golden answer:       82450, Your answer:       82450
+[PASS] [Pattern        126] Golden answer:    -1142568, Your answer:    -1142568
+[PASS] [Pattern        127] Golden answer:    -2350613, Your answer:    -2350613
+[PASS] [Pattern        128] Golden answer:     -570915, Your answer:     -570915
+[PASS] [Pattern        129] Golden answer:      591866, Your answer:      591866
+[PASS] [Pattern        130] Golden answer:    -1883678, Your answer:    -1883678
+[PASS] [Pattern        131] Golden answer:     -527576, Your answer:     -527576
+[PASS] [Pattern        132] Golden answer:     1165137, Your answer:     1165137
+[PASS] [Pattern        133] Golden answer:      177738, Your answer:      177738
+[PASS] [Pattern        134] Golden answer:      911614, Your answer:      911614
+[PASS] [Pattern        135] Golden answer:      185307, Your answer:      185307
+[PASS] [Pattern        136] Golden answer:      444530, Your answer:      444530
+[PASS] [Pattern        137] Golden answer:      948254, Your answer:      948254
+[PASS] [Pattern        138] Golden answer:       97869, Your answer:       97869
+[PASS] [Pattern        139] Golden answer:     -133968, Your answer:     -133968
+[PASS] [Pattern        140] Golden answer:     1340476, Your answer:     1340476
+[PASS] [Pattern        141] Golden answer:      221730, Your answer:      221730
+[PASS] [Pattern        142] Golden answer:     -893656, Your answer:     -893656
+[PASS] [Pattern        143] Golden answer:      246526, Your answer:      246526
+[PASS] [Pattern        144] Golden answer:      453224, Your answer:      453224
+[PASS] [Pattern        145] Golden answer:     1241720, Your answer:     1241720
+[PASS] [Pattern        146] Golden answer:     1778163, Your answer:     1778163
+[PASS] [Pattern        147] Golden answer:     1207926, Your answer:     1207926
+[PASS] [Pattern        148] Golden answer:     1895194, Your answer:     1895194
+[PASS] [Pattern        149] Golden answer:     1310957, Your answer:     1310957
+[PASS] [Pattern        150] Golden answer:     -732069, Your answer:     -732069
+[PASS] [Pattern        151] Golden answer:     -937435, Your answer:     -937435
+[PASS] [Pattern        152] Golden answer:     -451436, Your answer:     -451436
+[PASS] [Pattern        153] Golden answer:      159669, Your answer:      159669
+[PASS] [Pattern        154] Golden answer:     1386533, Your answer:     1386533
+[PASS] [Pattern        155] Golden answer:     1099743, Your answer:     1099743
+[PASS] [Pattern        156] Golden answer:     1656085, Your answer:     1656085
+[PASS] [Pattern        157] Golden answer:     1500670, Your answer:     1500670
+[PASS] [Pattern        158] Golden answer:     -338186, Your answer:     -338186
+[PASS] [Pattern        159] Golden answer:     -690492, Your answer:     -690492
+[PASS] [Pattern        160] Golden answer:     1195834, Your answer:     1195834
+[PASS] [Pattern        161] Golden answer:      704819, Your answer:      704819
+[PASS] [Pattern        162] Golden answer:     -360051, Your answer:     -360051
+[PASS] [Pattern        163] Golden answer:    -1463644, Your answer:    -1463644
+[PASS] [Pattern        164] Golden answer:     -182343, Your answer:     -182343
+[PASS] [Pattern        165] Golden answer:      -14059, Your answer:      -14059
+[PASS] [Pattern        166] Golden answer:    -1954476, Your answer:    -1954476
+[PASS] [Pattern        167] Golden answer:     -407052, Your answer:     -407052
+[PASS] [Pattern        168] Golden answer:     -259036, Your answer:     -259036
+[PASS] [Pattern        169] Golden answer:      -40020, Your answer:      -40020
+[PASS] [Pattern        170] Golden answer:      -86346, Your answer:      -86346
+[PASS] [Pattern        171] Golden answer:    -1132561, Your answer:    -1132561
+[PASS] [Pattern        172] Golden answer:    -1191211, Your answer:    -1191211
+[PASS] [Pattern        173] Golden answer:    -1110391, Your answer:    -1110391
+[PASS] [Pattern        174] Golden answer:     -508440, Your answer:     -508440
+[PASS] [Pattern        175] Golden answer:     1561069, Your answer:     1561069
+[PASS] [Pattern        176] Golden answer:     1568053, Your answer:     1568053
+[PASS] [Pattern        177] Golden answer:     1690808, Your answer:     1690808
+[PASS] [Pattern        178] Golden answer:     1797707, Your answer:     1797707
+[PASS] [Pattern        179] Golden answer:     1171580, Your answer:     1171580
+[PASS] [Pattern        180] Golden answer:    -1369778, Your answer:    -1369778
+[PASS] [Pattern        181] Golden answer:    -1677490, Your answer:    -1677490
+[PASS] [Pattern        182] Golden answer:    -1691072, Your answer:    -1691072
+[PASS] [Pattern        183] Golden answer:     -713037, Your answer:     -713037
+[PASS] [Pattern        184] Golden answer:     2129250, Your answer:     2129250
+[PASS] [Pattern        185] Golden answer:      955823, Your answer:      955823
+[PASS] [Pattern        186] Golden answer:     -413858, Your answer:     -413858
+[PASS] [Pattern        187] Golden answer:     1015720, Your answer:     1015720
+[PASS] [Pattern        188] Golden answer:     -227487, Your answer:     -227487
+[PASS] [Pattern        189] Golden answer:      288822, Your answer:      288822
+[PASS] [Pattern        190] Golden answer:     -287909, Your answer:     -287909
+[PASS] [Pattern        191] Golden answer:      291643, Your answer:      291643
+[PASS] [Pattern        192] Golden answer:     3016177, Your answer:     3016177
+[PASS] [Pattern        193] Golden answer:     1855354, Your answer:     1855354
+[PASS] [Pattern        194] Golden answer:    -1306341, Your answer:    -1306341
+[PASS] [Pattern        195] Golden answer:     -605752, Your answer:     -605752
+[PASS] [Pattern        196] Golden answer:    -1345690, Your answer:    -1345690
+[PASS] [Pattern        197] Golden answer:     -690472, Your answer:     -690472
+[PASS] [Pattern        198] Golden answer:    -1082715, Your answer:    -1082715
+[PASS] [Pattern        199] Golden answer:     -677673, Your answer:     -677673
+[PASS] [Pattern        200] Golden answer:      781449, Your answer:      781449
+[PASS] [Pattern        201] Golden answer:     2015300, Your answer:     2015300
+[PASS] [Pattern        202] Golden answer:     1488760, Your answer:     1488760
+[PASS] [Pattern        203] Golden answer:     1744942, Your answer:     1744942
+[PASS] [Pattern        204] Golden answer:     2150698, Your answer:     2150698
+[PASS] [Pattern        205] Golden answer:     1905564, Your answer:     1905564
+[PASS] [Pattern        206] Golden answer:     1655613, Your answer:     1655613
+[PASS] [Pattern        207] Golden answer:      763697, Your answer:      763697
+[PASS] [Pattern        208] Golden answer:     -733979, Your answer:     -733979
+[PASS] [Pattern        209] Golden answer:    -1823802, Your answer:    -1823802
+[PASS] [Pattern        210] Golden answer:    -3119802, Your answer:    -3119802
+[PASS] [Pattern        211] Golden answer:    -1628376, Your answer:    -1628376
+[PASS] [Pattern        212] Golden answer:    -1362538, Your answer:    -1362538
+[PASS] [Pattern        213] Golden answer:      261910, Your answer:      261910
+[PASS] [Pattern        214] Golden answer:     -297659, Your answer:     -297659
+[PASS] [Pattern        215] Golden answer:     -420391, Your answer:     -420391
+[PASS] [Pattern        216] Golden answer:     2582845, Your answer:     2582845
+[PASS] [Pattern        217] Golden answer:     -877193, Your answer:     -877193
+[PASS] [Pattern        218] Golden answer:    -1113004, Your answer:    -1113004
+[PASS] [Pattern        219] Golden answer:     -166967, Your answer:     -166967
+[PASS] [Pattern        220] Golden answer:      537804, Your answer:      537804
+[PASS] [Pattern        221] Golden answer:     -195570, Your answer:     -195570
+[PASS] [Pattern        222] Golden answer:     -622885, Your answer:     -622885
+[PASS] [Pattern        223] Golden answer:      510181, Your answer:      510181
+[PASS] [Pattern        224] Golden answer:     1632393, Your answer:     1632393
+[PASS] [Pattern        225] Golden answer:     -596703, Your answer:     -596703
+[PASS] [Pattern        226] Golden answer:     -359322, Your answer:     -359322
+[PASS] [Pattern        227] Golden answer:     1335681, Your answer:     1335681
+[PASS] [Pattern        228] Golden answer:     1638018, Your answer:     1638018
+[PASS] [Pattern        229] Golden answer:     1714656, Your answer:     1714656
+[PASS] [Pattern        230] Golden answer:     1516977, Your answer:     1516977
+[PASS] [Pattern        231] Golden answer:     1175143, Your answer:     1175143
+[PASS] [Pattern        232] Golden answer:     1940675, Your answer:     1940675
+[PASS] [Pattern        233] Golden answer:      614908, Your answer:      614908
+[PASS] [Pattern        234] Golden answer:     -634890, Your answer:     -634890
+------End the data input(AXI-Stream)------
+[PASS] [Pattern        235] Golden answer:    -1077103, Your answer:    -1077103
+latency =        9940
+----Start the coefficient input(AXI-lite)----
+ Check Coefficient ...
+OK: exp =        -986, rdata =        -986
+OK: exp =        -613, rdata =        -613
+OK: exp =        -472, rdata =        -472
+OK: exp =         436, rdata =         436
+OK: exp =         124, rdata =         124
+OK: exp =         406, rdata =         406
+OK: exp =        -838, rdata =        -838
+OK: exp =         808, rdata =         808
+OK: exp =        -531, rdata =        -531
+OK: exp =         290, rdata =         290
+OK: exp =         250, rdata =         250
+ Tape programming done ...
+ Start FIR
+----End the coefficient input(AXI-lite)----
+----Start the data input(AXI-Stream)----
+OK: exp =          91, rdata =          91
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+[PASS] [Pattern          0] Golden answer:      610334, Your answer:      610334
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+[PASS] [Pattern          1] Golden answer:      284791, Your answer:      284791
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+OK: exp =          -1, rdata =          -1
+[PASS] [Pattern          2] Golden answer:      582364, Your answer:      582364
+[PASS] [Pattern          3] Golden answer:      104922, Your answer:      104922
+[PASS] [Pattern          4] Golden answer:     -314400, Your answer:     -314400
+[PASS] [Pattern          5] Golden answer:       39497, Your answer:       39497
+[PASS] [Pattern          6] Golden answer:     -259992, Your answer:     -259992
+[PASS] [Pattern          7] Golden answer:      274852, Your answer:      274852
+[PASS] [Pattern          8] Golden answer:      641535, Your answer:      641535
+[PASS] [Pattern          9] Golden answer:      716883, Your answer:      716883
+[PASS] [Pattern         10] Golden answer:    -1134123, Your answer:    -1134123
+[PASS] [Pattern         11] Golden answer:      509338, Your answer:      509338
+[PASS] [Pattern         12] Golden answer:    -2533453, Your answer:    -2533453
+[PASS] [Pattern         13] Golden answer:      933508, Your answer:      933508
+[PASS] [Pattern         14] Golden answer:    -2091139, Your answer:    -2091139
+[PASS] [Pattern         15] Golden answer:     -807439, Your answer:     -807439
+[PASS] [Pattern         16] Golden answer:      245257, Your answer:      245257
+[PASS] [Pattern         17] Golden answer:      193192, Your answer:      193192
+[PASS] [Pattern         18] Golden answer:     3024834, Your answer:     3024834
+[PASS] [Pattern         19] Golden answer:     -624383, Your answer:     -624383
+[PASS] [Pattern         20] Golden answer:      380582, Your answer:      380582
+[PASS] [Pattern         21] Golden answer:    -1788461, Your answer:    -1788461
+[PASS] [Pattern         22] Golden answer:      263611, Your answer:      263611
+[PASS] [Pattern         23] Golden answer:     -600025, Your answer:     -600025
+[PASS] [Pattern         24] Golden answer:     1803396, Your answer:     1803396
+[PASS] [Pattern         25] Golden answer:    -1670235, Your answer:    -1670235
+[PASS] [Pattern         26] Golden answer:     1437399, Your answer:     1437399
+[PASS] [Pattern         27] Golden answer:    -3059541, Your answer:    -3059541
+[PASS] [Pattern         28] Golden answer:     1270466, Your answer:     1270466
+[PASS] [Pattern         29] Golden answer:    -2283217, Your answer:    -2283217
+[PASS] [Pattern         30] Golden answer:     1497599, Your answer:     1497599
+[PASS] [Pattern         31] Golden answer:    -2187106, Your answer:    -2187106
+[PASS] [Pattern         32] Golden answer:     1069860, Your answer:     1069860
+[PASS] [Pattern         33] Golden answer:    -2887012, Your answer:    -2887012
+[PASS] [Pattern         34] Golden answer:      650995, Your answer:      650995
+[PASS] [Pattern         35] Golden answer:    -1609964, Your answer:    -1609964
+[PASS] [Pattern         36] Golden answer:     1383453, Your answer:     1383453
+[PASS] [Pattern         37] Golden answer:       91971, Your answer:       91971
+[PASS] [Pattern         38] Golden answer:      535644, Your answer:      535644
+[PASS] [Pattern         39] Golden answer:     -302065, Your answer:     -302065
+[PASS] [Pattern         40] Golden answer:    -1645120, Your answer:    -1645120
+[PASS] [Pattern         41] Golden answer:      855769, Your answer:      855769
+[PASS] [Pattern         42] Golden answer:     -652950, Your answer:     -652950
+[PASS] [Pattern         43] Golden answer:     2164263, Your answer:     2164263
+[PASS] [Pattern         44] Golden answer:    -1109461, Your answer:    -1109461
+[PASS] [Pattern         45] Golden answer:     1350876, Your answer:     1350876
+[PASS] [Pattern         46] Golden answer:      868173, Your answer:      868173
+[PASS] [Pattern         47] Golden answer:      800898, Your answer:      800898
+[PASS] [Pattern         48] Golden answer:      291460, Your answer:      291460
+[PASS] [Pattern         49] Golden answer:     1155843, Your answer:     1155843
+[PASS] [Pattern         50] Golden answer:     -277207, Your answer:     -277207
+[PASS] [Pattern         51] Golden answer:      309728, Your answer:      309728
+[PASS] [Pattern         52] Golden answer:     -898879, Your answer:     -898879
+[PASS] [Pattern         53] Golden answer:    -1787903, Your answer:    -1787903
+[PASS] [Pattern         54] Golden answer:      445463, Your answer:      445463
+[PASS] [Pattern         55] Golden answer:    -1660872, Your answer:    -1660872
+[PASS] [Pattern         56] Golden answer:      -77200, Your answer:      -77200
+[PASS] [Pattern         57] Golden answer:      294829, Your answer:      294829
+[PASS] [Pattern         58] Golden answer:      162327, Your answer:      162327
+[PASS] [Pattern         59] Golden answer:     2208432, Your answer:     2208432
+[PASS] [Pattern         60] Golden answer:    -1935994, Your answer:    -1935994
+[PASS] [Pattern         61] Golden answer:     1439669, Your answer:     1439669
+[PASS] [Pattern         62] Golden answer:     -759281, Your answer:     -759281
+[PASS] [Pattern         63] Golden answer:     2579005, Your answer:     2579005
+[PASS] [Pattern         64] Golden answer:    -1458901, Your answer:    -1458901
+[PASS] [Pattern         65] Golden answer:      679797, Your answer:      679797
+[PASS] [Pattern         66] Golden answer:     -626681, Your answer:     -626681
+[PASS] [Pattern         67] Golden answer:     2697871, Your answer:     2697871
+[PASS] [Pattern         68] Golden answer:     -611827, Your answer:     -611827
+[PASS] [Pattern         69] Golden answer:     -679665, Your answer:     -679665
+[PASS] [Pattern         70] Golden answer:     -737771, Your answer:     -737771
+[PASS] [Pattern         71] Golden answer:     1818045, Your answer:     1818045
+[PASS] [Pattern         72] Golden answer:     1216225, Your answer:     1216225
+[PASS] [Pattern         73] Golden answer:     2471105, Your answer:     2471105
+[PASS] [Pattern         74] Golden answer:      352745, Your answer:      352745
+[PASS] [Pattern         75] Golden answer:     1526591, Your answer:     1526591
+[PASS] [Pattern         76] Golden answer:     -701733, Your answer:     -701733
+[PASS] [Pattern         77] Golden answer:     -836755, Your answer:     -836755
+[PASS] [Pattern         78] Golden answer:     -797203, Your answer:     -797203
+[PASS] [Pattern         79] Golden answer:     -198554, Your answer:     -198554
+[PASS] [Pattern         80] Golden answer:    -1205045, Your answer:    -1205045
+[PASS] [Pattern         81] Golden answer:     -407640, Your answer:     -407640
+[PASS] [Pattern         82] Golden answer:    -1064269, Your answer:    -1064269
+[PASS] [Pattern         83] Golden answer:      464644, Your answer:      464644
+[PASS] [Pattern         84] Golden answer:    -1556477, Your answer:    -1556477
+[PASS] [Pattern         85] Golden answer:     -183149, Your answer:     -183149
+[PASS] [Pattern         86] Golden answer:    -1735944, Your answer:    -1735944
+[PASS] [Pattern         87] Golden answer:     -785405, Your answer:     -785405
+[PASS] [Pattern         88] Golden answer:    -1059150, Your answer:    -1059150
+[PASS] [Pattern         89] Golden answer:      200319, Your answer:      200319
+------End the data input(AXI-Stream)------
+[PASS] [Pattern         90] Golden answer:    -1273293, Your answer:    -1273293
+latency =        1315
+---------------------------------------------
+-----------Congratulations! Pass-------------
+---------------------------------------------
+$finish called at time : 150105 ns : File "C:/Users/b0990/vivado/SOC_Lab3_Final/SOC_Lab3_Final.srcs/sim_1/new/fir_tb.v" Line 221
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'fir_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 2ms
+launch_simulation: Time (s): cpu = 00:00:02 ; elapsed = 00:00:11 . Memory (MB): peak = 3068.582 ; gain = 0.000
+current_fileset -simset [ get_filesets sim_1 ]
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
