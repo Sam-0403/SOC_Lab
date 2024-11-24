@@ -76,8 +76,8 @@ module fir #(
     // reg  [5:0] y_cnt_r;       // count to the cycle where output Y has calculated
     // reg  [5:0] y_cnt_w;
  
-    reg  [9:0] tlast_cnt_r;    // count to data length 600
-    wire [9:0] tlast_cnt_w; 
+    reg  [31:0] tlast_cnt_r;    // count to data length 600
+    wire [31:0] tlast_cnt_w; 
 
     reg  [5:0] tap_AR;    // address which will send into tap_RAM
     reg  [4:0] k_r;
@@ -100,10 +100,17 @@ module fir #(
     reg  [3:0] x_cnt_r;
     reg  [3:0] x_cnt_w;
 
+    wire  [3:0] x_cnt_last;
+    assign x_cnt_last = (x_cnt_r==0)?(4'd10):(x_cnt_r-1);
+
     reg  [(pDATA_WIDTH-1):0] data_ff;
 
     wire [(pDATA_WIDTH-1):0] x_sel;
     reg   mux_data_sel;
+
+    reg [31:0] data_temp_r, data_temp_w;
+    reg [31:0] data_temp2_r, data_temp2_w;
+    reg is_loaded_r, is_loaded_w;
 
     //----------------------- AXI-Lite -----------------------------
     reg ARREADY;
@@ -205,10 +212,11 @@ module fir #(
     always @(*) begin
         is_pending_w = is_pending;
         if (!is_pending) begin
-            is_pending_w = (sm_tvalid)?(1):(0);
+            is_pending_w = ((sm_tvalid && !is_loaded_r) || (sm_tvalid && (tlast_cnt_r==(data_length_r-2))))?(1):(0);
         end
         else begin
-            is_pending_w = (ss_tvalid)?(0):(1);
+            // is_pending_w = (ss_tvalid)?(0):(1);
+            is_pending_w = (sm_tready)?(0):(1);
         end
     end
     always @(posedge axis_clk or negedge axis_rst_n) begin
@@ -243,10 +251,13 @@ module fir #(
     
     //------------------------- data_RAM signals -----------------------------
     assign data_EN = 1;
-    assign data_WE = (( ss_tvalid && ss_tready && (awaddr[7:0] == 8'h80)) 
-                  || (init_addr_r != 6'd44))? 4'b1111 : 4'b0000;  // if ss_tlast not asserted, still can write
-    assign data_A  = (init_addr_r != 6'd44)? init_addr_r : (data_WE)?({x_cnt_r, 2'd0}):(data_A_w); // data initialize before ap_start
-    assign data_Di = (init_addr_r != 6'd44)? 0 : ss_tdata;
+    // assign data_WE = (( ss_tvalid && ss_tready && (awaddr[7:0] == 8'h80) && k_r!=12 ) || (init_addr_r != 6'd44))? 4'b1111 : 4'b0000;  // if ss_tlast not asserted, still can write
+    assign data_WE = (( ss_tvalid && ss_tready && (awaddr[7:0] == 8'h80)) || (init_addr_r != 6'd44))? 4'b1111 : 4'b0000;
+    // assign data_A  = (init_addr_r != 6'd44)? init_addr_r : (data_WE)?({x_cnt_r, 2'd0}):(data_A_w); // data initialize before ap_start
+    assign data_A  = (init_addr_r != 6'd44)? init_addr_r : (data_WE)?({x_cnt_last, 2'd0}):(data_A_w);
+    // assign data_Di = (init_addr_r != 6'd44)? 0 : ss_tdata;
+    // assign data_Di = (init_addr_r != 6'd44 && is_loaded_r)? 0 : data_temp2_r;
+    assign data_Di = (init_addr_r != 6'd44)? 0 : data_temp2_r;
     
     // data RAM initialize    
     assign init_addr_w = (init_addr_r == 6'd44)? init_addr_r : init_addr_r + 6'd4;
@@ -258,13 +269,42 @@ module fir #(
             init_addr_r <= init_addr_w;
     end
 
+    
+    always @(*) begin
+        data_temp_w = data_temp_r;
+        data_temp2_w = data_temp2_r;
+        is_loaded_w = is_loaded_r;
+        if (ss_tready && ss_tvalid) begin
+            data_temp_w = ss_tdata;
+            data_temp2_w = data_temp_r;
+            is_loaded_w = 1;
+        end
+        if (sm_tready && sm_tvalid) begin
+            is_loaded_w = 0;
+        end
+    end
+    always @(posedge axis_clk or negedge axis_rst_n) begin
+        if (!axis_rst_n) begin
+            data_temp_r <= 0;
+            data_temp2_r <= 0;
+            is_loaded_r <= 0;
+        end
+        else begin
+            data_temp_r <= data_temp_w;
+            data_temp2_r <= data_temp2_w;
+            is_loaded_r <= is_loaded_w;
+        end
+    end
+
     //-------------------- Stream-in X ------------------------//
     // Only input when FIR is processing and k = 0
-    assign ss_tready = (ap_ctrl[2] == 0 && init_addr_r == 6'd44 && (awaddr[7:0] == 8'h80) && (k_r>=12))? 1 : 0;
+    // assign ss_tready = (ap_ctrl[2] == 0 && init_addr_r == 6'd44 && (awaddr[7:0] == 8'h80) && (k_r>=12))? 1 : 0;
+    assign ss_tready = (ap_ctrl[2] == 0 && init_addr_r == 6'd44 && (awaddr[7:0] == 8'h80) && ss_tvalid)? 1 : 0;
     
     //-------------------- Stream-out Y -----------------------//
     assign sm_tvalid = (k_r==12 && ap_ctrl[2] == 0)? 1'b1 : 1'b0;
-    assign sm_tdata  = y;   // data after calculation Y[t]
+    // assign sm_tdata  = y;   // data after calculation Y[t]
+    assign sm_tdata  = y_tmp; 
     assign sm_tlast  = _sm_tlast; 
 
     //-------------- FSM for AXI-Stream output Y (sm_tlast)-------------    
@@ -272,7 +312,8 @@ module fir #(
         case (sm_state_r)
             SM_IDLE:
             begin
-                if (tlast_cnt_w == data_length_r-1) begin
+                // if (tlast_cnt_w == data_length_r-1) begin
+                if (tlast_cnt_w == data_length_r) begin
                     _sm_tlast     = 1'b1;
                     sm_state_w = SM_DONE;
                 end
@@ -302,37 +343,11 @@ module fir #(
             sm_state_r <= sm_state_w;
     end
     
-    //------------------ For AXI-Stream output Y -----------------------    
-    // always @* begin
-    //     if (ss_tready) begin
-    //         if (ss_tvalid) // If fir is ready for new data in
-    //             y_cnt_w = y_cnt_r + 1'b1;
-    //         else
-    //             y_cnt_w = y_cnt_r;
-    //     end
-    //     else if (y_cnt_r == 0) begin
-    //         if (sm_tvalid && sm_tready) // If firmware send the signal for Y output request
-	// 	        y_cnt_w = 0 - 6'd10;
-    //         else
-    //             y_cnt_w = y_cnt_r;
-    //     end
-    //     else begin
-    //         y_cnt_w = y_cnt_r + 1'b1;
-    //     end
-    // end
-    
-    // always @(posedge axis_clk or negedge axis_rst_n) begin
-    //     if (!axis_rst_n || ap_ctrl[2]) 
-    //         y_cnt_r <= -6'd25; // 3 for operation pipeline, 11 for calculation
-    //     else
-    //         y_cnt_r <= y_cnt_w;
-    // end
-    
     //-------------- For sm_tlast. count to data length ------------------    
     assign tlast_cnt_w = (sm_tvalid && sm_tready && araddr == 32'h3000_0084)? tlast_cnt_r + 1'b1 : tlast_cnt_r;
     always @(posedge axis_clk or negedge axis_rst_n) begin
         if (!axis_rst_n || ap_ctrl[2]) 
-            tlast_cnt_r <= 10'd0;
+            tlast_cnt_r <= 0;
         else
             tlast_cnt_r <= tlast_cnt_w;
     end
@@ -356,7 +371,8 @@ module fir #(
             h <= h_tmp;
             x <= x_tmp;
             m <= m_tmp;
-            if (ss_tready && ss_tvalid)
+            // if (ss_tready && ss_tvalid)
+            if (sm_tready && sm_tvalid)
                 y <= 0;
             else
                 y <= y_tmp;
@@ -370,7 +386,10 @@ module fir #(
             k_w = (sm_tready)?(13):(k_r);
         end
         else begin
-            if (ss_tvalid && ss_tready) begin
+            // if (ss_tvalid && ss_tready) begin
+            //     k_w = 0;
+            // end
+            if (sm_tvalid && sm_tready) begin
                 k_w = 0;
             end
             else if (sm_tvalid)
@@ -436,7 +455,8 @@ module fir #(
                 data_A_w = 4 * (11 + x_cnt_r - k_r);
         end
         else begin
-            data_A_w = 0;
+            // data_A_w = 0;
+            data_A_w = 32'd40;
         end
     end   
     
@@ -454,13 +474,15 @@ module fir #(
     //--------------- MUX to select X from FF or data_RAM -------------
     // MUX to select x from FF or Data_RAM
     always @* begin
-        if (k_r == 4'd0)
-            mux_data_sel = 1;
-        else
-            mux_data_sel = 0;
+        // if (k_r == 4'd0)
+        //     mux_data_sel = 1;
+        // else
+        //     mux_data_sel = 0;
+        mux_data_sel = (k_r==1 && tlast_cnt_r==(data_length_r-1))?1:&data_WE;
     end
 
     // output from MUX
-    assign x_sel = (mux_data_sel)? data_ff : data_Do;
+    // assign x_sel = (mux_data_sel)? data_ff : data_Do;
+    assign x_sel = (mux_data_sel)? data_temp_r : data_Do;
     
 endmodule
