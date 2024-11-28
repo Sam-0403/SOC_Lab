@@ -33,9 +33,7 @@ void __attribute__ ( ( section ( ".mprjram" ) ) ) fir_excute() {
 
 	// while (t < N-1) {		
 	// 	outputsignal[t] = wb_read(reg_fir_y_out);  // read Y from fir
-  	
 	// 	t = t + 1;	
-	
 	// 	wb_write(reg_fir_x_in, t);
     // }	
 

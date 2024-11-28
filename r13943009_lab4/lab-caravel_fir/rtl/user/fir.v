@@ -1,15 +1,12 @@
 `timescale 1ns / 1ps
 
-// `define SS_IDLE 1'b1
-// `define SS_DONE 1'b0
-
 module fir #(
     parameter pADDR_WIDTH = 32,
     parameter pDATA_WIDTH = 32,
     parameter Tape_Num    = 11,
     parameter Data_Num    = 11
 )(
-    //----------- AXI-Lite Interface (Read/Write Transaction) ------
+    // AXI-Lite Interface (Read/Write Transaction) 
     output wire                     awready,    // address write ready
     output wire                     wready,     // data    write ready
     input  wire                     awvalid,    // address write valid
@@ -22,29 +19,29 @@ module fir #(
     output wire                     rvalid,     // data    read valid
     input  wire [(pADDR_WIDTH-1):0] araddr,     // address read data   => Send the Address of Coefficient to Read
     output wire [(pDATA_WIDTH-1):0] rdata,      // data    read data   => Coefficient of that Address
-    //------------------ AXI-Stream In X[n] ----------------------
+    // AXI-Stream In X[n] 
     output wire                     ss_tready,
     input  wire                     ss_tvalid,
     input  wire [(pDATA_WIDTH-1):0] ss_tdata,   // data input x[t-i]
     input  wire                     ss_tlast,
-    //----------------- AXI-Stream Out Y[t] ----------------------
+    // AXI-Stream Out Y[t] 
     input  wire                     sm_tready,
     output wire                     sm_tvalid,
     output wire [(pDATA_WIDTH-1):0] sm_tdata,   // data after calculation Y[t]
     output wire                     sm_tlast,
-    //-------------------- BRAM for tap RAM ----------------------
+    // BRAM for tap RAM 
     output wire [3:0]               tap_WE,
     output wire                     tap_EN,
     output wire [(pDATA_WIDTH-1):0] tap_Di,     // transfer tape from fir to memory
     output wire [(pADDR_WIDTH-1):0] tap_A,     
     input  wire [(pDATA_WIDTH-1):0] tap_Do,     // output from Tape_Ram
-    //-------------------- BRAM for data RAM --------------------
+    // BRAM for data RAM 
     output wire [3:0]               data_WE,
     output wire                     data_EN,
     output wire [(pDATA_WIDTH-1):0] data_Di,   // data after calculation
     output wire [(pADDR_WIDTH-1):0] data_A,
     input  wire [(pDATA_WIDTH-1):0] data_Do,   // output from Data_Ram
-    //-------------------- Default clk & rst ----------------------
+    // Default clk & rst 
     input  wire                     axis_clk,
     input  wire                     axis_rst_n
 );
@@ -72,9 +69,6 @@ module fir #(
     reg sm_state_w;
 
     reg _sm_tlast;
-
-    // reg  [5:0] y_cnt_r;       // count to the cycle where output Y has calculated
-    // reg  [5:0] y_cnt_w;
  
     reg  [31:0] tlast_cnt_r;    // count to data length 600
     wire [31:0] tlast_cnt_w; 
@@ -106,13 +100,13 @@ module fir #(
     reg  [(pDATA_WIDTH-1):0] data_ff;
 
     wire [(pDATA_WIDTH-1):0] x_sel;
-    reg   mux_data_sel;
+    wire mux_data_sel;
 
     reg [31:0] data_temp_r, data_temp_w;
     reg [31:0] data_temp2_r, data_temp2_w;
     reg is_loaded_r, is_loaded_w;
 
-    //----------------------- AXI-Lite -----------------------------
+    // AXI-Lite 
     reg ARREADY;
     reg AWREADY;
     reg WREADY;
@@ -132,7 +126,7 @@ module fir #(
     
     assign rdata   = (arvalid && araddr[7:0] == 8'd0)? ap_ctrl : tap_Do; // read tap
     
-    //-------------- Configuration Register control --------------- 
+    // Configuration Register control  
     always @* begin
         /*----- ap_idle -----*/
         if (ap_state_r == AP_IDLE)
@@ -208,14 +202,13 @@ module fir #(
             ap_state_r <= ap_state_w;
     end
 
-    //-------------- Check if IP is pending ----------------
+    // Check if IP is pending 
     always @(*) begin
         is_pending_w = is_pending;
         if (!is_pending) begin
             is_pending_w = ((sm_tvalid && !is_loaded_r) || (sm_tvalid && (tlast_cnt_r==(data_length_r-2))))?(1):(0);
         end
         else begin
-            // is_pending_w = (ss_tvalid)?(0):(1);
             is_pending_w = (sm_tready)?(0):(1);
         end
     end
@@ -226,7 +219,7 @@ module fir #(
             is_pending <= is_pending_w;
     end
 
-    //---------------- 0x10-14: data length ------------------
+    // 0x10-14: data length 
     always @* begin
         if(awaddr == 32'h3000_0010 && awvalid) 
             write_len = 1'b1;
@@ -243,20 +236,16 @@ module fir #(
             data_length_r <= data_length_w;
     end
     
-    //-------------- 0x80-FF: tap parameter ------------------
+    // 0x80-FF: tap parameter 
     assign tap_EN = 1;
     assign tap_WE = ((wvalid == 1) && (awaddr[7:0] != 0))? 4'b1111 : 4'b0000;
     assign tap_A  = (awvalid == 1)? awaddr[5:0] : tap_AR[5:0]; // write prioirty
     assign tap_Di = wdata;
     
-    //------------------------- data_RAM signals -----------------------------
+    // data_RAM signals 
     assign data_EN = 1;
-    // assign data_WE = (( ss_tvalid && ss_tready && (awaddr[7:0] == 8'h80) && k_r!=12 ) || (init_addr_r != 6'd44))? 4'b1111 : 4'b0000;  // if ss_tlast not asserted, still can write
     assign data_WE = (( ss_tvalid && ss_tready && (awaddr[7:0] == 8'h80)) || (init_addr_r != 6'd44))? 4'b1111 : 4'b0000;
-    // assign data_A  = (init_addr_r != 6'd44)? init_addr_r : (data_WE)?({x_cnt_r, 2'd0}):(data_A_w); // data initialize before ap_start
     assign data_A  = (init_addr_r != 6'd44)? init_addr_r : (data_WE)?({x_cnt_last, 2'd0}):(data_A_w);
-    // assign data_Di = (init_addr_r != 6'd44)? 0 : ss_tdata;
-    // assign data_Di = (init_addr_r != 6'd44 && is_loaded_r)? 0 : data_temp2_r;
     assign data_Di = (init_addr_r != 6'd44)? 0 : data_temp2_r;
     
     // data RAM initialize    
@@ -296,23 +285,20 @@ module fir #(
         end
     end
 
-    //-------------------- Stream-in X ------------------------//
+    // Stream-in X 
     // Only input when FIR is processing and k = 0
-    // assign ss_tready = (ap_ctrl[2] == 0 && init_addr_r == 6'd44 && (awaddr[7:0] == 8'h80) && (k_r>=12))? 1 : 0;
     assign ss_tready = (ap_ctrl[2] == 0 && init_addr_r == 6'd44 && (awaddr[7:0] == 8'h80) && ss_tvalid)? 1 : 0;
     
-    //-------------------- Stream-out Y -----------------------//
+    // Stream-out Y 
     assign sm_tvalid = (k_r==12 && ap_ctrl[2] == 0)? 1'b1 : 1'b0;
-    // assign sm_tdata  = y;   // data after calculation Y[t]
     assign sm_tdata  = y_tmp; 
     assign sm_tlast  = _sm_tlast; 
 
-    //-------------- FSM for AXI-Stream output Y (sm_tlast)-------------    
+    // FSM for AXI-Stream output Y (sm_tlast)    
     always @* begin
         case (sm_state_r)
             SM_IDLE:
             begin
-                // if (tlast_cnt_w == data_length_r-1) begin
                 if (tlast_cnt_w == data_length_r) begin
                     _sm_tlast     = 1'b1;
                     sm_state_w = SM_DONE;
@@ -343,7 +329,7 @@ module fir #(
             sm_state_r <= sm_state_w;
     end
     
-    //-------------- For sm_tlast. count to data length ------------------    
+    // For sm_tlast. count to data length     
     assign tlast_cnt_w = (sm_tvalid && sm_tready && araddr == 32'h3000_0084)? tlast_cnt_r + 1'b1 : tlast_cnt_r;
     always @(posedge axis_clk or negedge axis_rst_n) begin
         if (!axis_rst_n || ap_ctrl[2]) 
@@ -352,8 +338,7 @@ module fir #(
             tlast_cnt_r <= tlast_cnt_w;
     end
     
-    //---------------------- Pipeline Operation ------------------------------
-    //------------ FIR Operation: One Multiplier and one Adder ---------------
+    // FIR Operation: One Multiplier and one Adder 
     assign h_tmp = tap_Do;  // h[i]
     assign x_tmp = x_sel;   // x[t-i]
     assign m_tmp = h * x;   // h[i] * x[t-i]
@@ -371,7 +356,6 @@ module fir #(
             h <= h_tmp;
             x <= x_tmp;
             m <= m_tmp;
-            // if (ss_tready && ss_tvalid)
             if (sm_tready && sm_tvalid)
                 y <= 0;
             else
@@ -379,16 +363,11 @@ module fir #(
         end
     end
     
-    //---------------------- Address Generator ----------------------   
     always @* begin
-        // TODO: is_pending
         if (is_pending_w) begin
             k_w = (sm_tready)?(13):(k_r);
         end
         else begin
-            // if (ss_tvalid && ss_tready) begin
-            //     k_w = 0;
-            // end
             if (sm_tvalid && sm_tready) begin
                 k_w = 0;
             end
@@ -423,7 +402,6 @@ module fir #(
         end
     end
     
-    //-------------------- Address Generator(Data) ------------------
     // count x[t]    
     always @* begin
         if (ap_ctrl[2] == 1'b0) begin // if FIR is executing
@@ -460,7 +438,6 @@ module fir #(
         end
     end   
     
-    //-------------------------- 32-bit FF --------------------------    
     // FF store one value, the first x is from FF.
     always @(posedge axis_clk or negedge axis_rst_n) begin
 	if (!axis_rst_n) begin
@@ -471,18 +448,10 @@ module fir #(
         end
     end
     
-    //--------------- MUX to select X from FF or data_RAM -------------
     // MUX to select x from FF or Data_RAM
-    always @* begin
-        // if (k_r == 4'd0)
-        //     mux_data_sel = 1;
-        // else
-        //     mux_data_sel = 0;
-        mux_data_sel = (k_r==1 && tlast_cnt_r==(data_length_r-1))?1:&data_WE;
-    end
+    assign mux_data_sel = (k_r==1 && tlast_cnt_r==(data_length_r-1))?1:&data_WE;
 
     // output from MUX
-    // assign x_sel = (mux_data_sel)? data_ff : data_Do;
     assign x_sel = (mux_data_sel)? data_temp_r : data_Do;
     
 endmodule
